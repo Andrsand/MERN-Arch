@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    fillName: {
+    fullName: {
         type: String,
         required: true,
     },
@@ -15,12 +15,10 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
     avatarUrl: String,   // это опциональное свойство юзера поэтому мы передаем его не как объект, в отличии от обязательныъх свойств выше
-
 },
     {
         timestamps: true,
     },
-
 );
 
 export default mongoose.model('User', UserSchema);

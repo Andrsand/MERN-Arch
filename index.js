@@ -10,7 +10,7 @@ import UserModel from './models/User.js';
 
 mongoose.connect('mongodb://localhost:27017/blog')
     .then(() => console.log('DB ok'))
-    .catch((err) => console.log('DB error, err'));
+    .catch((err) => console.log('DB error', err));
 
 const app = express(); // создание приложения
 
@@ -30,18 +30,19 @@ app.post('/auth/register', registerValidation, async (req, res) => { // при �
         email: req.body.email,
         fullName: req.body.fullName,
         avatarUrl: req.body.avatarUrl,
-        passwordHash: req.body.passwordHash,
+        //passwordHash: req.body.passwordHash,
+        passwordHash,
     });
 
     const user = await doc.save();                  // сохраняем документ в mongoDB и результат возвращаем в user
 
     res.json(user);                                             // если ошибок нет, вернем информацию о юзере
+});
 
-    app.listen(4444, (err) => {
-        if (err) {
-            return console.log(err);
-        }
+app.listen(4444, (err) => {
+    if (err) {
+        return console.log(err);
+    }
 
-        console.log('Server OK');
-    })
+    console.log('Server OK');
 })
