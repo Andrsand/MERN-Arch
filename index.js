@@ -26,6 +26,14 @@ app.post('/auth/login', async (req, res) => {    // авторизация
             });
         }
 
+        const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash); // если же юзер найден, указываем что бы bcrypt сравнил (compare) пароль из тела запроса с тем что в _doc.passwordHash
+
+        if (!isValidPass) {                                  // если пароль не подходит - выводим соответствующее сообщение
+            return req.status(404).json({
+                message: 'Неверный логин или пароль',
+            });
+        }
+
     } catch (err) {
 
     }
