@@ -21,7 +21,7 @@ app.post('/auth/login', async (req, res) => {    // авторизация
         const user = await UserModel.findOne({ email: req.body.email });  // проверяем, есть ли в базе данных пользователь из запроса body.
 
         if (!user) {                                                      // если такого пользователя в базе нет - возвращаем соответсвующее сообщение.
-            return req.status(404).json({
+            return res.status(404).json({
                 message: 'Пользователь не найден',
             });
         }
@@ -50,7 +50,7 @@ app.post('/auth/login', async (req, res) => {    // авторизация
             ...userData,
             token,
         });
-    } catch (err) {                                   // если ошибка - выводим соответсвующее сообщение
+    } catch (err) {                                   // если ошибка - выводим соответсвующее
         console.log(err);
         res.status(500).json({
             message: 'Не удалось авторизоваться',
