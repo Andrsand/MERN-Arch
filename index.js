@@ -16,6 +16,21 @@ const app = express(); // создание приложения
 
 app.use(express.json()); // для того чтобы express мог читать формат json
 
+app.post('/auth/login', async (req, res) => {    // авторизация
+    try {
+        const user = await UserModel.findOne({ email: req.body.email });  // проверяем, есть ли в базе данных пользователь из запроса body.
+
+        if (!user) {                                                      // если такого пользователя в базе нет - возвращаем соответсвующее сообщение.
+            return req.status(404).json({
+                message: 'Пользователь не найден',
+            });
+        }
+
+    } catch (err) {
+
+    }
+});
+
 app.post('/auth/register', registerValidation, async (req, res) => { // при запросе по джанному адресу проверяем валидатором, есть ли в запросе точто мы хотим и только после этого выполняем следующую часть
     try {
         const errors = validationResult(req);
