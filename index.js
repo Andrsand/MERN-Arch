@@ -104,7 +104,13 @@ app.post('/auth/register', registerValidation, async (req, res) => { // при �
 
 });
 
+app.get('/auth/me', (req, res) => {    // проверка информации о себе
+    try {
 
+    } catch (err) {
+
+    }
+});
 
 app.listen(4444, (err) => {
     if (err) {
