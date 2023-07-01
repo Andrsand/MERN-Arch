@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from 'mongoose'
 
-import { registerValidation } from './validations/auth.js';
+import { registerValidation } from './validations.js';
 
 import * as UserController from './controllers/UserController.js'; // импортируем все методы из данного файла
 
