@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from 'mongoose'
 
-import { registerValidation } from './validations.js';
+import { registerValidation, loginValidation } from './validations.js';
 
 import * as UserController from './controllers/UserController.js'; // импортируем все методы из данного файла
 
@@ -17,7 +17,7 @@ const app = express(); // создание приложения
 
 app.use(express.json()); // для того чтобы express мог читать формат json
 
-app.post('/auth/login', UserController.login); // импорт методов из UserController.js
+app.post('/auth/login', loginValidation, UserController.login); // импорт методов из UserController.js
 
 app.post('/auth/register', registerValidation, UserController.register);
 
