@@ -7,6 +7,7 @@ import { registerValidation } from './validations/auth.js';
 import { validationResult } from "express-validator";
 
 import UserModel from './models/User.js';
+import checkAuth from "./utils/checkAuth.js";
 
 mongoose.connect('mongodb://localhost:27017/blog')
     .then(() => console.log('DB ok'))
@@ -104,7 +105,7 @@ app.post('/auth/register', registerValidation, async (req, res) => { // при �
 
 });
 
-app.get('/auth/me', (req, res) => {    // проверка информации о себе
+app.get('/auth/me', checkAuth, (req, res) => {    // проверка информации о себе. checkAuth - функция проверки авторизации из checkAuth.js
     try {
 
     } catch (err) {
