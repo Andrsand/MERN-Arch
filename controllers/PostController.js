@@ -1,6 +1,6 @@
-import PostModel from '../models/Post';
+import PostModel from '../models/Post.js';
 
-// создание документа
+// роут создание документа
 export const create = async (req, res) => {
     try {
         const doc = new PostModel({

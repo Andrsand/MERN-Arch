@@ -1,10 +1,10 @@
 import express from "express";
 import mongoose from 'mongoose'
 
-import { registerValidation, loginValidation } from './validations.js';
+import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
 import * as UserController from './controllers/UserController.js'; // импортируем все методы из данного файла
-
+import * as PostController from './controllers/PostController.js';
 
 
 import checkAuth from "./utils/checkAuth.js";
@@ -22,6 +22,13 @@ app.post('/auth/login', loginValidation, UserController.login); // импорт 
 app.post('/auth/register', registerValidation, UserController.register);
 
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+//app.get('/posts', PostController.getAll); // получение всех статей
+//app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
+app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи (только после валидации)
+//app.delete('/posts', PostController.remove); // удаление статьи
+//app.patch('/posts', PostController.update); // обновление статьи
+
 
 app.listen(4444, (err) => {
     if (err) {
