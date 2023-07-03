@@ -15,6 +15,9 @@ export const create = async (req, res) => {
 
         res.json(post);                  // возвращаем ответ
     } catch (err) {
-
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось создать статью',
+        });
     }
 };
