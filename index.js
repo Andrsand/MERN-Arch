@@ -18,9 +18,14 @@ const app = express(); // создание приложения
 
 const storage = multer.diskStorage({    // схранилище для загрузки файлов картинок
     destination: (_, _, cb) => {        // прочерки - для того что бы не вводить ненужные нам параметры функции
-        cb(null, 'uploads');            // cb говорит что нет ошибок и сохраняет файл в папку uploads
+        cb(null, 'uploads');            // cb говорит что нет ошибок и возвращиет путь файла (папка uploads)
+    },
+    filename: (_, file, cb) => {        // перед сохранением файла объясняем функции, что мы хотим из файла вытащить оригинальное название
+        cb(null, file.originalname);
     },
 });
+
+const upload = multer({ storage });     // объясняем, что у нас есть upload, multer и хранилище - storage
 
 app.use(express.json()); // для того чтобы express мог читать формат json
 
@@ -29,6 +34,8 @@ app.post('/auth/login', loginValidation, UserController.login); // импорт 
 app.post('/auth/register', registerValidation, UserController.register);
 
 app.get('/auth/me', checkAuth, UserController.getMe);
+
+app.post();
 
 app.get('/posts', PostController.getAll); // получение всех статей
 app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
