@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from 'mongoose'
+import multer from "multer";
 
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
