@@ -49,7 +49,7 @@ app.get('/posts', PostController.getAll); // получение всех ста�
 app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
 app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи (только после валидации)
 app.delete('/posts/:id', checkAuth, PostController.remove); // удаление статьи
-app.patch('/posts/:id', checkAuth, PostController.update); // обновление статьи
+app.patch('/posts/:id', checkAuth, postCreateValidation, PostController.update); // обновление статьи
 
 
 app.listen(4444, (err) => {
