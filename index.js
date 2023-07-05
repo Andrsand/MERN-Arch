@@ -9,6 +9,7 @@ import * as PostController from './controllers/PostController.js';
 
 
 import checkAuth from "./utils/checkAuth.js";
+import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 mongoose.connect('mongodb://localhost:27017/blog')
     .then(() => console.log('DB ok'))
@@ -31,9 +32,9 @@ app.use(express.json()); // для того чтобы express мог читат
 
 app.use('/uploads', express.static('uploads')); // объясняем express чтобы проверял, есть ли в uploads тот файл который мы загружаем
 
-app.post('/auth/login', loginValidation, UserController.login); // импорт методов из UserController.js
+app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login); // импорт методов из UserController.js
 
-app.post('/auth/register', registerValidation, UserController.register);
+app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 
 app.get('/auth/me', checkAuth, UserController.getMe);
 
@@ -47,9 +48,9 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => { // есл
 
 app.get('/posts', PostController.getAll); // получение всех статей
 app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
-app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи (только после валидации)
+app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create); // создание статьи (только после валидации)
 app.delete('/posts/:id', checkAuth, PostController.remove); // удаление статьи
-app.patch('/posts/:id', checkAuth, postCreateValidation, PostController.update); // обновление статьи
+app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update); // обновление статьи
 
 
 app.listen(4444, (err) => {
