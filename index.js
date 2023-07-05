@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/blog')
 const app = express(); // создание приложения
 
 const storage = multer.diskStorage({    // схранилище для загрузки файлов картинок
-    destination: (_, _, cb) => {        // прочерки - для того что бы не вводить ненужные нам параметры функции
+    destination: (_, __, cb) => {        // прочерки - для того что бы не вводить ненужные нам параметры функции
         cb(null, 'uploads');            // cb говорит что нет ошибок и возвращиет путь файла (папка uploads)
     },
     filename: (_, file, cb) => {        // перед сохранением файла объясняем функции, что мы хотим из файла вытащить оригинальное название
@@ -29,13 +29,21 @@ const upload = multer({ storage });     // объясняем, что у нас 
 
 app.use(express.json()); // для того чтобы express мог читать формат json
 
+app.use('/uploads', express.static('uploads')); // объясняем express чтобы проверял, есть ли в uploads тот файл который мы загружаем
+
 app.post('/auth/login', loginValidation, UserController.login); // импорт методов из UserController.js
 
 app.post('/auth/register', registerValidation, UserController.register);
 
 app.get('/auth/me', checkAuth, UserController.getMe);
 
-app.post();
+// роут загрузки картинки
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => { // если есть запрос на upload - использвем мидлвеар single из multer, затем говорим, что ожидаем файл с названием image
+    res.json({
+        url: `/uploads/${req.file.originalname}`,           // далее показываем пользователю куда сохранили файл и его оригинальное название
+    });
+});
+
 
 app.get('/posts', PostController.getAll); // получение всех статей
 app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
