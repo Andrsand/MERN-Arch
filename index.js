@@ -16,6 +16,12 @@ mongoose.connect('mongodb://localhost:27017/blog')
 
 const app = express(); // создание приложения
 
+const storage = multer.diskStorage({    // схранилище для загрузки файлов картинок
+    destination: (_, _, cb) => {        // прочерки - для того что бы не вводить ненужные нам параметры функции
+        cb(null, 'uploads');            // cb говорит что нет ошибок и сохраняет файл в папку uploads
+    },
+});
+
 app.use(express.json()); // для того чтобы express мог читать формат json
 
 app.post('/auth/login', loginValidation, UserController.login); // импорт методов из UserController.js
