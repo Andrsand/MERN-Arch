@@ -26,7 +26,7 @@ app.get('/auth/me', checkAuth, UserController.getMe);
 app.get('/posts', PostController.getAll); // получение всех статей
 app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
 app.post('/posts', checkAuth, postCreateValidation, PostController.create); // создание статьи (только после валидации)
-//app.delete('/posts', PostController.remove); // удаление статьи
+app.delete('/posts/:id', checkAuth, PostController.remove); // удаление статьи
 //app.patch('/posts', PostController.update); // обновление статьи
 
 

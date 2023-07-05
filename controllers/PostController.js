@@ -54,6 +54,42 @@ export const getOne = async (req, res) => {
     }
 }
 
+// роут удаления статьи
+export const remove = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        PostModel.findOneAndDelete({      // найти один документ и удалить его
+            _id: postId,
+        },)
+
+            .then(
+                (doc, err) => {
+                    if (err) {                // если была ошибка ....
+                        console.log(err);
+                        return res.status(500).json({
+                            message: 'Не удалось удалить статью',
+                        });
+                    }
+
+                    if (!doc) {                       // если такой статьи в BD нет ...
+                        return res.status(404).json({
+                            message: 'Статья не найдена',
+                        });
+                    }
+
+                    res.json({                        // если статья удалилась - выводим  success: true,
+                        success: true,
+                    });
+                },
+            );
+
+
+    } catch (err) {
+
+    }
+}
+
 // роут создание документа
 export const create = async (req, res) => {
     try {
