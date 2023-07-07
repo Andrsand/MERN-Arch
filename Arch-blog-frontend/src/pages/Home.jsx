@@ -8,6 +8,10 @@ import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 
 export const Home = () => {
+  React.useEffect(() => {    // при певром рендере делаем запрос с помощью axios
+
+  }, []);
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
