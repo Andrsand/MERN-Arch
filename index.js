@@ -3,13 +3,10 @@ import mongoose from 'mongoose'
 import multer from "multer";
 
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
+import { handleValidationErrors, checkAuth } from "./utils//index.js";
+import { UserController, PostController } from './controllers/index.js'; // импортируем все методы из данного файла
 
-import * as UserController from './controllers/UserController.js'; // импортируем все методы из данного файла
-import * as PostController from './controllers/PostController.js';
 
-
-import checkAuth from "./utils/checkAuth.js";
-import handleValidationErrors from "./utils/handleValidationErrors.js";
 
 mongoose.connect('mongodb://localhost:27017/blog')
     .then(() => console.log('DB ok'))
