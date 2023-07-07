@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Fragment } from "react";
 
 import "./index.scss";
 import { ThemeProvider } from "@mui/material";
@@ -13,7 +14,7 @@ import store from "./redux/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
+  <Fragment>
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -22,5 +23,5 @@ root.render(
         </Provider>
       </BrowserRouter>
     </ThemeProvider>
-  </React.StrictMode>
+  </Fragment>
 );

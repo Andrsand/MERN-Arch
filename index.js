@@ -1,6 +1,7 @@
 import express from "express";
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import multer from "multer";
+import cors from 'cors'; // библиотека для разблокировки перехода с других доменов
 
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 import { handleValidationErrors, checkAuth } from "./utils//index.js";
@@ -26,7 +27,7 @@ const storage = multer.diskStorage({    // схранилище для загр�
 const upload = multer({ storage });     // объясняем, что у нас есть upload, multer и хранилище - storage
 
 app.use(express.json()); // для того чтобы express мог читать формат json
-
+app.use(cors());
 app.use('/uploads', express.static('uploads')); // объясняем express чтобы проверял, есть ли в uploads тот файл который мы загружаем
 
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login); // импорт методов из UserController.js
@@ -56,4 +57,4 @@ app.listen(4444, (err) => {
     }
 
     console.log('Server OK');
-})
+});
