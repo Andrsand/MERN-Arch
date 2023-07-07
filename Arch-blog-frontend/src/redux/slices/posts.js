@@ -1,7 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from '../../axios';
+
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => { // делаем асинхронный запрос
+    const { data } = await axios.get('/posts'); // объясняем, что нужно вытащить data из асинхронного запроса
+    return data; // и возвращаем, то что нам придет от бэкенда
+});
 
 const initialState = {
-    post: {                      // статьи
+    posts: {                      // статьи
         items: [],
         status: 'loading',
     },
