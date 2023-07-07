@@ -20,7 +20,21 @@ const initialState = {
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
-    reducer: {},                   // методы для обновления нашего стейта
+    reducers: {},                   // методы для обновления нашего стейта
+    extraReducers: {               // здесь описываем сотояние нашего асинхронного экшна
+        [fetchPosts.pending]: (state) => { // Загрузка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
+            state.posts.items = [];        // при загрузке возвращаем пустой массив
+            state.posts.status = 'loading';
+        },
+        [fetchPosts.fulfilled]: (state, action) => { // Успешная загрузка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
+            state.posts.items = action.payload;
+            state.posts.status = 'loaded';   // обновляем статус на loaded
+        },
+        [fetchPosts.rejected]: (state) => { // Ошибка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
+            state.posts.items = [];         // при ошибке возращаем пустой массив
+            state.posts.status = 'error';   // обновляем статус на error
+        },
+    },
 });
 
 export const postsReducer = postsSlice.reducer;
