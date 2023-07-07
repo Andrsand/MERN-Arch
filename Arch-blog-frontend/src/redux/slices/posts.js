@@ -17,3 +17,6 @@ const postsSlice = createSlice({
     reducer: {},                   // методы для обновления нашего стейта
 });
 
+export const postsReducer = postsSlice.reducer;
+
+
