@@ -1,5 +1,24 @@
 import PostModel from '../models/Post.js';
 
+export const getLastTags = async (req, res) => {
+    try {
+        const posts = await PostModel.find().limit(5).exec(); // берем все тэги у послеэних 5 статей
+
+        const tags = posts // map ом берем каждый объект вытаскиваем его статьи slice ом взять последние 5
+            .map((obj) => obj.tags)
+            .flat()
+            .slice(0, 5);
+
+
+        res.json(posts);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось получить статьи',
+        });
+    }
+};
+
 // роут получения всех статей
 export const getAll = async (req, res) => {
     try {
@@ -12,7 +31,7 @@ export const getAll = async (req, res) => {
             message: 'Не удалось получить статьи',
         });
     }
-}
+};
 
 // роут получения одной статьи
 export const getOne = async (req, res) => {
@@ -52,7 +71,7 @@ export const getOne = async (req, res) => {
             message: 'Не удалось получить статьи',
         });
     }
-}
+};
 
 // роут удаления статьи
 export const remove = async (req, res) => {
@@ -91,7 +110,7 @@ export const remove = async (req, res) => {
             message: 'Не удалось удалитьь статью',
         });
     }
-}
+};
 
 // роут создание документа
 export const create = async (req, res) => {

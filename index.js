@@ -43,9 +43,10 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => { // есл
     });
 });
 
+app.get('/tags', PostController.getLastTags); // роут получения тегов
 
 app.get('/posts', PostController.getAll); // получение всех статей
-app.get('/posts/tags', PostController.geLastTags); // получение всех последних тегов
+app.get('/posts/tags', PostController.getLastTags); // получение всех последних тегов
 app.get('/posts/:id', PostController.getOne); // получение одной статьи по динамическому параметру :id
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create); // создание статьи (только после валидации)
 app.delete('/posts/:id', checkAuth, PostController.remove); // удаление статьи
