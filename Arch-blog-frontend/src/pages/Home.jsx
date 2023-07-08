@@ -16,6 +16,7 @@ export const Home = () => {
   const { posts, tags } = useSelector(state => state.posts);
 
   const isPostsLoading = posts.status === 'loading';   // если статус поста - loading то в isPostsLoading будет true
+  const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(() => {    // при певром рендере делаем запрос с помощью axios
     dispatch(fetchPosts());// выполняем запрос на бэкенд
@@ -55,7 +56,7 @@ export const Home = () => {
 
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={['react', 'typescript', 'заметки']} isLoading={false} />
+          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={[
               {
