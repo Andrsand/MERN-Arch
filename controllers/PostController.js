@@ -4,10 +4,8 @@ export const getLastTags = async (req, res) => {
     try {
         const posts = await PostModel.find().limit(5).exec(); // берем все тэги у послеэних 5 статей
 
-        const tags = posts // map ом берем каждый объект вытаскиваем его статьи slice ом взять последние 5
-            .map((obj) => obj.tags)
-            .flat()
-            .slice(0, 5);
+        // map ом берем каждый объект вытаскиваем его статьи slice ом взять последние 5
+        const tags = tags.map((obj) => obj.tags).flat().slice(0, 5);
 
 
         res.json(posts);
