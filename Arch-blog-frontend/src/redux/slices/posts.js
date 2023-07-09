@@ -6,7 +6,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => { // 
     return data; // и возвращаем, то что нам придет от бэкенда
 });
 
-export const fetchTags = createAsyncThunk('/tags/fetchTags', async () => { // делаем асинхронный запрос
+export const fetchTags = createAsyncThunk('posts/fetchTags', async () => { // делаем асинхронный запрос
     const { data } = await axios.get('/tags'); // объясняем, что нужно вытащить data из асинхронного запроса
     return data; // и возвращаем, то что нам придет от бэкенда
 });
