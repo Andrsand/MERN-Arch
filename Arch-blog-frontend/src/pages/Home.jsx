@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
+
 // import axios from '../axios';
 
 import { Post } from '../components/Post';
@@ -22,9 +23,6 @@ export const Home = () => {
     dispatch(fetchPosts());// выполняем запрос на бэкенд
     dispatch(fetchTags());
   }, []);
-
-
-
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
@@ -46,7 +44,6 @@ export const Home = () => {
                 viewsCount={obj.viewsCount}  // число просмотров
                 commentsCount={3}            // комментарии
                 tags={obj.tags}              // тэги
-
                 isEditable
               />
             ),
