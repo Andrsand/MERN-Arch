@@ -1,10 +1,28 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
+import axios from "axios";
 
 export const FullPost = () => {
+
+  const params = useParams();
+
+  // делаем запрос не в Redax а локально, поскольку это вего лишь одна статья
+  const [data, setData] = React.useState(); // тут просто хранится deta
+  const { id } = useParams();
+
+  React.useEffect(() => {
+    axios.get(`/posts/${id}`).then(res => { // делаем запрос с помощью axios на /posts/${id} 
+      setData(res.data);                    // полученный результат сохраняем в стейт
+    }).catch(err => {                       // если же была ошибка ....
+      console.warn(err);
+      alert('Ошибка при получении статьи');
+    });
+  }, []);
+
   return (
     <>
       <Post
