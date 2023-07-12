@@ -20,22 +20,28 @@ export const Login = () => {        // подключаем библиотеку
     }
   });
 
+  const onSubmit = (values) => {  // эта функция выполняется только в случае коректной валидации
+    console.log(values);
+  };
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
         Вход в аккаунт
       </Typography>
-      <TextField
-        className={styles.field}
-        label="E-Mail"
-        error
-        helperText="Неверно указана почта"
-        fullWidth
-      />
-      <TextField className={styles.field} label="Пароль" fullWidth />
-      <Button size="large" variant="contained" fullWidth>
-        Войти
-      </Button>
+      <form onSubmit={handleSubmit(onSubmit)}> {/*вызов формы при корректной валидации */}
+        <TextField
+          className={styles.field}
+          label="E-Mail"
+          error
+          helperText="Неверно указана почта"
+          fullWidth
+        />
+        <TextField className={styles.field} label="Пароль" fullWidth />
+        <Button size="large" variant="contained" fullWidth>
+          Войти
+        </Button>
+      </form>
     </Paper>
   );
 };
