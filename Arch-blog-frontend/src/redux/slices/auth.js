@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../axios";
+import axios from "../../axios";
 
 export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (params) => { // params - берем информацию со всеми параметрами
     const { data } = await axios.get('/auth/login', params);  // объясняем, что есть асинхронный экшн тут будет храниться email и пароль
