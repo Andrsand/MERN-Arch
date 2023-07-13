@@ -40,8 +40,6 @@ export const Login = () => {        // подключаем библиотеку
     }
   };
 
-  React.useEffect();
-
   if (isAuth) {                   // если мы авторизованы то - переход на главную страницу
     return <Navigate to="/" />;
   }
