@@ -1,13 +1,19 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form"; // импорт библиотеки форм
+import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
 import styles from "./Login.module.scss";
 
 export const Login = () => {        // подключаем библиотеку useForm
+  const isAuth = useSelector(selectIsAuth); // isAuth объясняет нам авторизованы мы или нет
+  const dispatch = useDispatch();
   const {                           // вытаскиваем параметры формы
     register,
     handleSubmit,
@@ -22,8 +28,12 @@ export const Login = () => {        // подключаем библиотеку
   });
 
   const onSubmit = (values) => {  // эта функция выполняется только в случае коректной валидации
-    console.log(values);
+    dispatch(fetchAuth(values));  // получить объект values м передать его в бэкенд
   };
+
+  if (isAuth) {                   // если мы авторизованы то - переход на главную страницу
+    return <Navigate to="/" />;
+  }
 
   return (
     <Paper classes={{ root: styles.root }}>
