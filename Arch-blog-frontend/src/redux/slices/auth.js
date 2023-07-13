@@ -14,6 +14,11 @@ const initialState = {
 const authSlice = createSlice({
     name: 'auth',          // объясняем, что слайс называется name
     initialState,
+    reducers: {
+        logout: (state) => {   // выход из аккаунта
+            state.data = null;
+        }
+    },
     extraReducers: {  // информацию о пользователе мы получаем из асинхронного экшна и получив сохраняем в наш стейт
         [fetchAuth.pending]: (state) => {
             state.status = 'loading';        // при загрузке возвращаем статус loading
@@ -34,3 +39,4 @@ export const selectIsAuth = (state) => Boolean(state.auth.data); // функци
 
 export const authReducer = authSlice.reducer;
 
+export const { logout } = authSlice.actions;   // экспорт из authSlice всех экшнов, но вытаскиваем logout

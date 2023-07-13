@@ -27,9 +27,20 @@ export const Login = () => {        // подключаем библиотеку
     mode: 'onChange',               // указываем, что валидация должна происходить только в случае изменения этих полей
   });
 
-  const onSubmit = (values) => {  // эта функция выполняется только в случае коректной валидации
-    dispatch(fetchAuth(values));  // получить объект values м передать его в бэкенд
+  const onSubmit = async (values) => {  // эта функция выполняется только в случае коректной валидации
+    const data = await dispatch(fetchAuth(values));  // получить объект values м передать его в бэкенд
+
+    if (!data.payload) {
+      return alert('Не удалось авторизоваться');
+    }
+
+
+    if ('token' in data.payload) {                      // если в data есть token то сохраняем его в localstorage
+      window.localStorage.setItem('token', data.payload.token);
+    }
   };
+
+  React.useEffect();
 
   if (isAuth) {                   // если мы авторизованы то - переход на главную страницу
     return <Navigate to="/" />;
