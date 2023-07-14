@@ -44,6 +44,9 @@ export const Login = () => {        // подключаем библиотеку
     return <Navigate to="/" />;
   }
 
+
+  console.log(errors, isValid);
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
@@ -55,7 +58,7 @@ export const Login = () => {        // подключаем библиотеку
           label="E-Mail"
           error={Boolean(errors.email?.message)} // если errors.email ?.message получена то будет - true и будет подсветка красным
           helperText={errors.email?.message}   // если есть ошибка то возьми параметр errors и вытащи message если нет - то не надо вытаскивать
-          type="email"
+          //type="email"
           {...register('email', { required: 'Укажите почту' })} // если поле не заполнено - выходит надпись "укажите почту"
           fullWidth
         />
