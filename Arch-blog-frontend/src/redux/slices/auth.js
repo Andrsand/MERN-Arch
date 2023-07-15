@@ -6,6 +6,11 @@ export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => { 
     return data;  // если все нормально - получаем объект с информацией о пользователе
 });
 
+export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params) => { // params - берем информацию со всеми параметрами
+    const { data } = await axios.post('/auth/register', params);  // объясняем, что есть асинхронный экшн тут будет храниться email и пароль
+    return data;  // если все нормально - получаем объект с информацией о пользователе
+});
+
 export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async (params) => { // params - берем информацию со всеми параметрами
     const { data } = await axios.get('/auth/me');  // объясняем, что есть асинхронный экшн тут будет храниться email и пароль
     return data;  // если все нормально - получаем объект с информацией о пользователе
@@ -46,6 +51,18 @@ const authSlice = createSlice({
             state.data = action.payload;
         },
         [fetchAuthMe.rejected]: (state) => { // Ошибка - объясняем, что у этого объекта есть ключ fetchUserData и это у нас функция с аргументом state)
+            state.status = console.error;;     // обновляем статус на error
+            state.data = null;
+        },
+        [fetchRegister.pending]: (state) => {
+            state.status = 'loading';        // при загрузке возвращаем статус loading
+            state.data = null;               // запрос сделался и изначально он null
+        },
+        [fetchRegister.fulfilled]: (state, action) => { // Успешная загрузка 
+            state.status = 'loaded';                    // Статус - загружен
+            state.data = action.payload;
+        },
+        [fetchRegister.rejected]: (state) => { // Ошибка - объясняем, что у этого объекта есть ключ fetchUserData и это у нас функция с аргументом state)
             state.status = console.error;;     // обновляем статус на error
             state.data = null;
         },

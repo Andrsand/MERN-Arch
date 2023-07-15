@@ -17,7 +17,6 @@ export const Login = () => {        // подключаем библиотеку
   const {                           // вытаскиваем параметры формы
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {                // укапзываем изначальное состояние полей формы
@@ -58,7 +57,7 @@ export const Login = () => {        // подключаем библиотеку
           label="E-Mail"
           error={Boolean(errors.email?.message)} // если errors.email ?.message получена то будет - true и будет подсветка красным
           helperText={errors.email?.message}   // если есть ошибка то возьми параметр errors и вытащи message если нет - то не надо вытаскивать
-          //type="email"
+          type="email"
           {...register('email', { required: 'Укажите почту' })} // если поле не заполнено - выходит надпись "укажите почту"
           fullWidth
         />
@@ -69,7 +68,7 @@ export const Login = () => {        // подключаем библиотеку
           helperText={errors.password?.message}   // если есть ошибка то возбми параметр errors и вытащи message если нет - то не надо вытаскивать
           {...register('password', { required: 'Укажите пароль' })} // если поле не заполнено - выходит надпись "укажите почту"
           fullWidth />
-        <Button type="submit" size="large" variant="contained" fullWidth>
+        <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
           Войти
         </Button>
       </form>
