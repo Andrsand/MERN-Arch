@@ -14,7 +14,8 @@ import { fetchPosts, fetchTags } from '../redux/slices/posts';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const { posts, tags } = useSelector(state => state.posts);
+  const userData = useSelector((state) => state.auth.data);
+  const { posts, tags } = useSelector((state) => state.posts);
 
   const isPostsLoading = posts.status === 'loading';   // если статус поста - loading то в isPostsLoading будет true
   const isTagsLoading = tags.status === 'loading';
@@ -44,7 +45,7 @@ export const Home = () => {
                 viewsCount={obj.viewsCount}  // число просмотров
                 commentsCount={3}            // комментарии
                 tags={obj.tags}              // тэги
-                isEditable
+                isEditable={userData?._id === obj.user._id}
               />
             ),
           )}
