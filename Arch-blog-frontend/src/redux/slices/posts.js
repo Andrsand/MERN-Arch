@@ -11,6 +11,10 @@ export const fetchTags = createAsyncThunk('posts/fetchTags', async () => { // д
     return data; // и возвращаем, то что нам придет от бэкенда
 });
 
+export const fetchRemovePost = createAsyncThunk('posts/fetchRemovePost', async (id) =>
+    axios.delete(`/posts/${id}`),
+);
+
 const initialState = {
     posts: {                      // статьи
         items: [],
@@ -27,6 +31,7 @@ const postsSlice = createSlice({
     initialState,
     reducers: {},                   // методы для обновления нашего стейта
     extraReducers: {               // здесь описываем сотояние нашего асинхронного экшна
+        // получение статей
         [fetchPosts.pending]: (state) => { // Загрузка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
             state.posts.items = [];        // при загрузке возвращаем пустой массив
             state.posts.status = 'loading';
@@ -39,6 +44,8 @@ const postsSlice = createSlice({
             state.posts.items = [];         // при ошибке возращаем пустой массив
             state.posts.status = 'error';   // обновляем статус на error
         },
+
+        // получение тэгов
         [fetchTags.pending]: (state) => { // Загрузка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
             state.tags.items = [];        // при загрузке возвращаем пустой массив
             state.tags.status = 'loading';
@@ -50,6 +57,11 @@ const postsSlice = createSlice({
         [fetchTags.rejected]: (state) => { // Ошибка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
             state.tags.items = [];         // при ошибке возращаем пустой массив
             state.tags.status = 'error';   // обновляем статус на error
+        },
+
+        // удаление статьи
+        [fetchRemovePost.pending]: (state, action) => { // Загрузка - объясняем, что у этого объекта есть ключ fetchPosts и это у нас функция с аргументом state)
+            state.posts.items = state.posts.items.filter(obj => obj._id !== action.meta.arg);
         },
     },
 });
