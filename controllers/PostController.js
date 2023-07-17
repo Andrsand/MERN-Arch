@@ -64,7 +64,7 @@ export const getOne = async (req, res) => {
 
                 res.json(doc);                              // если все без ошибок и есть такая статья - возвращаем сам документ
             },
-            );
+            );//.populate(user);
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -117,7 +117,7 @@ export const create = async (req, res) => {
     try {
         const doc = new PostModel({
             title: req.body.title,
-            text: req.body.title,
+            text: req.body.text,
             imageUrl: req.body.imageUrl,
             tags: req.body.tags,
             user: req.userId,            // userId мы вытаскиваем уже не из body а из checkAuth.js - req.userId = decoded._id;
