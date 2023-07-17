@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useParams } from 'react-router-dom';
 
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -13,6 +13,7 @@ import axios from '../../axios';
 import styles from './AddPost.module.scss';
 
 export const AddPost = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
   const [isLoading, setLoading] = React.useState(false);
@@ -65,6 +66,23 @@ export const AddPost = () => {
       alert('Ошибка при создании статьи!');
     }
   };
+
+  React.useEffect(() => {
+    if (id) {
+      axios
+        .get(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setText(data.text);
+          setImageUrl(data.imageUrl);
+          setTags(data.tags.join(','));
+        })
+        .catch((err) => {
+          console.warn(err);
+          alert('Oшибка при получении статьи!');
+        });
+    }
+  }, []);
 
   const options = React.useMemo(
     () => ({
